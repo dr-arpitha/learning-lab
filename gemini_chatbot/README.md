@@ -1,7 +1,9 @@
+#### Building a Simple Chatbot with Gemini LLM
+
 In today’s guide we will be creating a chatbot using modern large language models (LLMs). We’ll walk through how to build a simple chatbot powered by **Google’s Gemini LLM** using Python. Feel free to use any of the other LLMs(OpenAI’s models, Meta’s Llama, Anthropic models) if you prefer.
 
 You can view this sample program at [Google Colab](https://colab.research.google.com/drive/1QSoinUItV8q6O8jE1RxQp0sU_SYdfMuY?usp=sharing)
-
+ 
 Prerequisites
 -------------
 
