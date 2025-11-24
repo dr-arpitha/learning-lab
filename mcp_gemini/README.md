@@ -84,7 +84,40 @@ ____
 
 In short: MCP is like USB for AI — a universal connection standard.
 ____
-### Our Python Script Explained Step-by-Step
+### Terminal MCP Server
+
+Clone the code in this directory. 
+
+The Python server script creates an MCP Server that exposes a single tool called _run\_command._ This tool allows the LLM (Gemini) to execute a terminal/command-line command safely through MCP.
+
+Our MCP server is named “terminal”. By naming it “terminal”, clients can identify this server as a terminal tool provider.
+
+**→ FastMCP:**
+*   Handles the MCP protocol
+*   Manages tool discovery
+*   Handles request/response formatting
+*   Exposes tools over stdio, WebSocket, etc.
+
+**→ Exposing the tool: run\_command()**
+
+*   @mcp.tool() turns the function into an MCP tool
+*   The LLM can now discover this tool via list\_tools()
+*   The model knows this tool requires:
+    *   a command parameter (string)
+*   The model knows the output is a string
+
+This is what it enables:
+
+> “delete file X”→ LLM generates: run\_command(command=”rm X”)→ MCP server executes it
+
+**→ Safety Note**
+
+This tool exposes _arbitrary shell execution_ if used carelessly.If you’re using this with an LLM, you MUST:
+*   Add guardrails
+*   Restrict commands
+*   Limit what the model is allowed to execute
+___
+### Terminal MCP Client 
 
 #### **→ Prerequisites**
 
@@ -96,7 +129,8 @@ pip install google-generativeai mcp
 
 #### → Define how to launch the MCP Server
 
-Our MCP server is a Python script that exposes command-line operations as tools:
+Our MCP server is a Python script that exposes command-line operations as tools. 
+Provide absolute path of the python server script:
 
 ```
 script_path=”/Users/.../commandline_server.py” 
